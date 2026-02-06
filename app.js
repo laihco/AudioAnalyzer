@@ -1,4 +1,15 @@
-import { createFFmpeg, fetchFile } from "https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js";
+let createFFmpeg, fetchFile;
+try {
+  ({ createFFmpeg, fetchFile } = await import(
+    "https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js"
+  ));
+} catch (e) {
+  console.error(e);
+  setStatus("ffmpeg failed to load (check Console). Are you running from http:// (not file://)?");
+  btn.disabled = false;
+  return;
+}
+
 
 const PALETTES = {
   // matches your Python presets (top -> bottom) :contentReference[oaicite:3]{index=3}
