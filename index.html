@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Audio → Gradient MP4</title>
+  <style>
+    body { font-family: system-ui, Arial; margin: 24px; max-width: 980px; }
+    .row { display:flex; gap:16px; flex-wrap: wrap; align-items: center; }
+    .card { border:1px solid #ddd; border-radius:12px; padding:16px; }
+    label { display:block; margin: 10px 0 6px; font-weight: 600; }
+    input[type="range"] { width: 320px; }
+    canvas { border-radius: 12px; border:1px solid #eee; width: 100%; max-width: 900px; }
+    button { padding: 10px 14px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .small { color:#555; font-size: 13px; line-height: 1.3; }
+    progress { width: 360px; height: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Audio → Gradient MP4</h1>
+  <p class="small">
+    Upload an MP3 (or choose a sample), tweak sensitivity + smoothing, then generate an MP4 in-browser.
+  </p>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>Audio input</label>
+        <input id="file" type="file" accept="audio/mpeg,audio/mp3" />
+        <div class="small">Or pick a sample:</div>
+        <select id="sample">
+          <option value="">— Select sample —</option>
+          <option value="assets/samples/sample1.mp3">Sample 1</option>
+          <option value="assets/samples/sample2.mp3">Sample 2</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Palette</label>
+        <select id="palette">
+          <option value="sunset">sunset</option>
+          <option value="daytime">daytime</option>
+          <option value="nighttime">nighttime</option>
+          <option value="sunrise">sunrise</option>
+        </select>
+
+        <label>Overlay cloud.png</label>
+        <input id="useCloud" type="checkbox" checked />
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div>
+        <label>Sensitivity (ENERGY_GAIN)</label>
+        <input id="gain" type="range" min="1" max="40" value="10" step="1" />
+        <div class="small"><span id="gainVal">10</span></div>
+      </div>
+
+      <div>
+        <label>Smoothing (temporal)</label>
+        <input id="smoothK" type="range" min="1" max="21" value="5" step="1" />
+        <div class="small">Window: <span id="smoothVal">5</span> frames</div>
+      </div>
+
+      <div>
+        <label>Stop shift range</label>
+        <input id="shiftRange" type="range" min="0.05" max="0.60" value="0.18" step="0.01" />
+        <div class="small"><span id="shiftVal">0.18</span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Hop (seconds per frame)</label>
+        <input id="hop" type="range" min="0.06" max="0.25" value="0.12" step="0.01" />
+        <div class="small"><span id="hopVal">0.12</span> sec → FPS ≈ <span id="fpsVal">8.33</span></div>
+      </div>
+
+      <div>
+        <label>Output size</label>
+        <div class="row">
+          <input id="w" type="number" value="1070" style="width:110px" /> ×
+          <input id="h" type="number" value="280" style="width:110px" />
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <button id="btn" disabled>Generate MP4</button>
+      <progress id="prog" value="0" max="1"></progress>
+      <div class="small" id="status">Load an MP3 to begin.</div>
+    </div>
+  </div>
+
+  <h2>Preview</h2>
+  <canvas id="cv" width="1070" height="280"></canvas>
+
+  <h2>Result</h2>
+  <video id="outVid" controls style="width:100%; max-width: 900px; border-radius:12px; border:1px solid #eee;"></video>
+  <div id="download"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
