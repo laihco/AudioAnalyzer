@@ -1,0 +1,17 @@
+# outputs
+outputs/
+audio_analyzer/analysis_out/
+
+# temp / python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# big local media
+*.mp3
+*.wav
+
+# OS
+.DS_Store
+Thumbs.db

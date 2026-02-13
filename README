@@ -1,0 +1,106 @@
+# Audio Gradient Visualizer
+
+A tool that creates music-reactive gradient videos.
+
+Given an audio file (.mp3), the tool generates an MP4 video where layered color bands dynamically shift in response to the music’s intensity.
+
+## What This Tool Generates
+
+This tool produces:
+
+A horizontal gradient video
+
+Color bands that shift position based on the audio waveform
+
+Smooth motion that scales with musical intensity
+
+Optional overlays
+
+Each run generates a new video based on:
+
+The selected color palette
+
+The reactivity setting
+
+The smoothness setting
+
+The input audio
+
+## How To Run
+Install dependencies
+```bash 
+pip install -r requirements.txt
+```
+
+You must also have ffmpeg installed and available in your system PATH.
+
+To check:
+``` bash
+ffmpeg -version
+```
+
+If it prints version info, you're good.
+
+## Run the generator
+
+From the repository root:
+``` bash
+python -m audio_analyzer.analyze_mp4 \
+  --input path/to/song.mp3 \
+  --palette sunrise/sunset/nighttime/daytime \
+  --reactivity [1.0-5.0] \
+  --smoothness [0.0-1.0]
+```
+
+The final video will be saved to:
+
+outputs/final_gradient.mp4
+
+Parameters
+
+These parameters allow meaningful control over the output.
+``` bash
+ --palette
+```
+Changes the overall color theme.
+
+Available presets:
+
+sunset
+
+sunrise
+
+daytime
+
+nighttime
+
+``` bash
+--reactivity (0.0 – 5.0)
+```
+Controls how strongly the gradient responds to the music.
+
+0.0 → very subtle motion
+
+1.0–2.0 → moderate movement
+
+3.0 → strong music-driven motion
+
+4.0–5.0 → highly reactive, dramatic shifts
+
+```bash
+--smoothness (0.0 – 1.0)
+```
+Controls how fluid or snappy the motion feels.
+
+0.0 → sharp, twitchy motion
+
+0.5 → balanced
+
+1.0 → very smooth, flowing transitions
+
+Optional: Cloud Overlay
+
+Add an atmospheric overlay:
+``` bash
+--cloud assets/cloud.png --cloud-alpha 0.35
+```
